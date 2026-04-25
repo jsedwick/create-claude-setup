@@ -1,0 +1,27 @@
+{
+  "name": "create-claude-setup",
+  "version": "0.1.0",
+  "description": "Interactive installer for Claude Code + obsidian-mcp-server + claude-chat-bridge",
+  "type": "module",
+  "bin": {
+    "create-claude-setup": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}

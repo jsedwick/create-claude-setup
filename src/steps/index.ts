@@ -1,17 +1,14 @@
 import type { Step } from './types.js';
 import { detectPlatform } from './detect-platform.js';
 import { detectNode } from './detect-node.js';
+import { detectClaudeCode } from './detect-claude-code.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
   detectPlatform,
   detectNode,
+  detectClaudeCode,
 
-  stubStep({
-    name: 'detect-claude-code',
-    phase: 'detect',
-    description: 'which claude + claude --version (minimum version TBD)',
-  }),
   stubStep({
     name: 'detect-existing-install',
     phase: 'detect',

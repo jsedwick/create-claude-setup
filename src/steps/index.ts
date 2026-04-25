@@ -1,15 +1,12 @@
 import type { Step } from './types.js';
 import { detectPlatform } from './detect-platform.js';
+import { detectNode } from './detect-node.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
   detectPlatform,
+  detectNode,
 
-  stubStep({
-    name: 'detect-node',
-    phase: 'detect',
-    description: 'Compare running Node against engines.node (>=20.0.0)',
-  }),
   stubStep({
     name: 'detect-claude-code',
     phase: 'detect',

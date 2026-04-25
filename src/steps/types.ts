@@ -4,6 +4,7 @@ export interface RunContext {
   state: SetupState;
   dryRun: boolean;
   force: boolean;
+  yes: boolean;
   skipFlags: Set<string>;
   log: (msg: string) => void;
 }

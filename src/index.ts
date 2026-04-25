@@ -46,6 +46,7 @@ async function main(): Promise<number> {
       dryRun: true,
       force: args.force,
       resume: false,
+      yes: args.yes,
       skipFlags: args.skipFlags,
     });
     return result.ok ? 0 : 1;
@@ -69,6 +70,7 @@ async function main(): Promise<number> {
     dryRun: false,
     force: args.force,
     resume: args.resume,
+    yes: args.yes,
     skipFlags: args.skipFlags,
   });
 

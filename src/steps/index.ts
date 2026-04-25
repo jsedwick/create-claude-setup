@@ -2,29 +2,18 @@ import type { Step } from './types.js';
 import { detectPlatform } from './detect-platform.js';
 import { detectNode } from './detect-node.js';
 import { detectClaudeCode } from './detect-claude-code.js';
+import { detectExistingInstall } from './detect-existing-install.js';
+import { detectExistingMcpConfig } from './detect-existing-mcp-config.js';
+import { gatherConfig } from './gather-config.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
   detectPlatform,
   detectNode,
   detectClaudeCode,
-
-  stubStep({
-    name: 'detect-existing-install',
-    phase: 'detect',
-    description: 'Read ~/.claude/setup-state.json; branch into reinstall mode if present',
-  }),
-  stubStep({
-    name: 'detect-existing-mcp-config',
-    phase: 'detect',
-    description: 'Query Claude Code MCP registry for prior obsidian-mcp-server registration',
-  }),
-
-  stubStep({
-    name: 'gather-config',
-    phase: 'configure',
-    description: 'Interactive wizard: mode, vault paths, components, skip flags',
-  }),
+  detectExistingInstall,
+  detectExistingMcpConfig,
+  gatherConfig,
 
   stubStep({
     name: 'fetch-mcp-server',

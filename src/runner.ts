@@ -10,6 +10,7 @@ export interface RunnerOptions {
   dryRun: boolean;
   force: boolean;
   resume: boolean;
+  yes: boolean;
   skipFlags: Set<string>;
   statePath?: string;
 }
@@ -24,6 +25,7 @@ export async function runPipeline(
     state,
     dryRun: opts.dryRun,
     force: opts.force,
+    yes: opts.yes,
     skipFlags: opts.skipFlags,
     log,
   };

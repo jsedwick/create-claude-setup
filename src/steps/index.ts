@@ -5,6 +5,9 @@ import { detectClaudeCode } from './detect-claude-code.js';
 import { detectExistingInstall } from './detect-existing-install.js';
 import { detectExistingMcpConfig } from './detect-existing-mcp-config.js';
 import { gatherConfig } from './gather-config.js';
+import { fetchMcpServer } from './fetch-mcp-server.js';
+import { fetchBridge } from './fetch-bridge.js';
+import { fetchPlugin } from './fetch-plugin.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -15,24 +18,9 @@ export const STEPS: readonly Step[] = [
   detectExistingMcpConfig,
   gatherConfig,
 
-  stubStep({
-    name: 'fetch-mcp-server',
-    phase: 'fetch',
-    description: 'npm install --prefix ~/.claude/managed/obsidian-mcp-server/',
-    skipOn: ['bridge-only'],
-  }),
-  stubStep({
-    name: 'fetch-bridge',
-    phase: 'fetch',
-    description: 'npm install --prefix ~/.claude/managed/claude-chat-bridge/',
-    skipOn: ['mcp-only'],
-  }),
-  stubStep({
-    name: 'fetch-plugin',
-    phase: 'fetch',
-    description: 'Tarball download from GitHub Releases at pinned tag, checksum verified',
-    skipOn: ['mcp-only', 'bridge-only'],
-  }),
+  fetchMcpServer,
+  fetchBridge,
+  fetchPlugin,
 
   stubStep({
     name: 'write-mcp-config',

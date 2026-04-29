@@ -14,6 +14,7 @@ import { writeBridgeConfig } from './write-bridge-config.js';
 import { generateHttpsCert } from './generate-https-cert.js';
 import { trustHttpsCert } from './trust-https-cert.js';
 import { generateLaunchdPlist } from './generate-launchd-plist.js';
+import { writeGitCommitWatchList } from './write-git-commit-watch-list.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -29,12 +30,6 @@ export const STEPS: readonly Step[] = [
   fetchPlugin,
 
   writeMcpConfig,
-  stubStep({
-    name: 'write-git-commit-watch-list',
-    phase: 'install',
-    description: 'Write git-commit-watch list config',
-    skipOn: ['bridge-only'],
-  }),
   registerMcpWithClaudeCode,
   stubStep({
     name: 'install-plugin',
@@ -43,6 +38,7 @@ export const STEPS: readonly Step[] = [
     preconditions: ['fetch-plugin', 'register-mcp-with-claude-code'],
     skipOn: ['mcp-only', 'bridge-only'],
   }),
+  writeGitCommitWatchList,
   stubStep({
     name: 'write-plugin-mcp-json-override',
     phase: 'install',

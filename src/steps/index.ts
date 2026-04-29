@@ -53,16 +53,10 @@ export const STEPS: readonly Step[] = [
   generateHttpsCert,
   trustHttpsCert,
   stubStep({
-    name: 'propagate-service-label',
-    phase: 'install',
-    description: 'Write service label to bridge config and launchd plist env',
-    skipOn: ['mcp-only'],
-  }),
-  stubStep({
     name: 'generate-launchd-plist',
     phase: 'install',
     description: 'launchctl bootstrap gui/$(id -u) <plist>',
-    preconditions: ['trust-https-cert', 'propagate-service-label'],
+    preconditions: ['trust-https-cert'],
     skipOn: ['mcp-only'],
   }),
   stubStep({

@@ -10,6 +10,7 @@ import { fetchBridge } from './fetch-bridge.js';
 import { fetchPlugin } from './fetch-plugin.js';
 import { writeMcpConfig } from './write-mcp-config.js';
 import { registerMcpWithClaudeCode } from './register-mcp-with-claude-code.js';
+import { writeBridgeConfig } from './write-bridge-config.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -46,12 +47,7 @@ export const STEPS: readonly Step[] = [
     preconditions: ['install-plugin'],
     skipOn: ['mcp-only', 'bridge-only'],
   }),
-  stubStep({
-    name: 'write-bridge-config',
-    phase: 'install',
-    description: 'Write bridge-config.json including resolved serviceLabel',
-    skipOn: ['mcp-only'],
-  }),
+  writeBridgeConfig,
   stubStep({
     name: 'generate-https-cert',
     phase: 'install',

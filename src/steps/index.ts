@@ -13,6 +13,7 @@ import { registerMcpWithClaudeCode } from './register-mcp-with-claude-code.js';
 import { writeBridgeConfig } from './write-bridge-config.js';
 import { generateHttpsCert } from './generate-https-cert.js';
 import { trustHttpsCert } from './trust-https-cert.js';
+import { generateLaunchdPlist } from './generate-launchd-plist.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -52,13 +53,7 @@ export const STEPS: readonly Step[] = [
   writeBridgeConfig,
   generateHttpsCert,
   trustHttpsCert,
-  stubStep({
-    name: 'generate-launchd-plist',
-    phase: 'install',
-    description: 'launchctl bootstrap gui/$(id -u) <plist>',
-    preconditions: ['trust-https-cert'],
-    skipOn: ['mcp-only'],
-  }),
+  generateLaunchdPlist,
   stubStep({
     name: 'seed-claude-md',
     phase: 'install',

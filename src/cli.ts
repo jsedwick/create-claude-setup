@@ -8,7 +8,7 @@ export interface ParsedArgs {
   unknown: string[];
 }
 
-const SKIP_FLAGS = new Set(['mcp-only', 'bridge-only']);
+const SKIP_FLAGS = new Set(['mcp-only', 'bridge-only', 'no-launchd']);
 
 export function parseArgs(argv: string[]): ParsedArgs {
   const out: ParsedArgs = {
@@ -63,6 +63,7 @@ Options:
   --force          Overwrite user-modified files (Decision 015 escape hatch)
   --mcp-only       Install only the MCP server
   --bridge-only    Install only the bridge (requires existing MCP)
+  --no-launchd     Skip the LaunchAgent plist install (bridge stays manually-run)
   --help, -h       Show this message
 
 State is persisted at ~/.claude/setup-state.json.

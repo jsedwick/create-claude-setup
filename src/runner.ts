@@ -42,10 +42,15 @@ function unsatisfiedPreconditions(state: SetupState, step: Step): string[] {
   if (!step.preconditions || step.preconditions.length === 0) return [];
   const missing: string[] = [];
   for (const dep of step.preconditions) {
-    const entry = findStep(state, dep);
-    if (!entry || entry.status !== 'completed') {
-      missing.push(dep);
+    let satisfied = false;
+    for (let i = state.steps.length - 1; i >= 0; i--) {
+      const entry = state.steps[i]!;
+      if (entry.name !== dep) continue;
+      if (entry.status === 'skipped') continue;
+      satisfied = entry.status === 'completed';
+      break;
     }
+    if (!satisfied) missing.push(dep);
   }
   return missing;
 }

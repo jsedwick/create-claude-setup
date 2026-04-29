@@ -8,6 +8,7 @@ import { gatherConfig } from './gather-config.js';
 import { fetchMcpServer } from './fetch-mcp-server.js';
 import { fetchBridge } from './fetch-bridge.js';
 import { fetchPlugin } from './fetch-plugin.js';
+import { writeMcpConfig } from './write-mcp-config.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -22,12 +23,7 @@ export const STEPS: readonly Step[] = [
   fetchBridge,
   fetchPlugin,
 
-  stubStep({
-    name: 'write-mcp-config',
-    phase: 'install',
-    description: 'Write MCP server config',
-    skipOn: ['bridge-only'],
-  }),
+  writeMcpConfig,
   stubStep({
     name: 'write-git-commit-watch-list',
     phase: 'install',

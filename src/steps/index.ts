@@ -9,6 +9,7 @@ import { fetchMcpServer } from './fetch-mcp-server.js';
 import { fetchBridge } from './fetch-bridge.js';
 import { fetchPlugin } from './fetch-plugin.js';
 import { writeMcpConfig } from './write-mcp-config.js';
+import { registerMcpWithClaudeCode } from './register-mcp-with-claude-code.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -30,12 +31,7 @@ export const STEPS: readonly Step[] = [
     description: 'Write git-commit-watch list config',
     skipOn: ['bridge-only'],
   }),
-  stubStep({
-    name: 'register-mcp-with-claude-code',
-    phase: 'install',
-    description: 'Atomic JSON write to ~/.claude.json mcpServers key',
-    skipOn: ['bridge-only'],
-  }),
+  registerMcpWithClaudeCode,
   stubStep({
     name: 'install-plugin',
     phase: 'install',
@@ -54,7 +50,6 @@ export const STEPS: readonly Step[] = [
     name: 'write-bridge-config',
     phase: 'install',
     description: 'Write bridge-config.json including resolved serviceLabel',
-    preconditions: ['register-mcp-with-claude-code'],
     skipOn: ['mcp-only'],
   }),
   stubStep({

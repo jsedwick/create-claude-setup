@@ -29,12 +29,6 @@ export const STEPS: readonly Step[] = [
     skipOn: ['bridge-only'],
   }),
   stubStep({
-    name: 'write-trusted-dirs',
-    phase: 'install',
-    description: 'Write allowed-paths config',
-    skipOn: ['bridge-only'],
-  }),
-  stubStep({
     name: 'write-git-commit-watch-list',
     phase: 'install',
     description: 'Write git-commit-watch list config',

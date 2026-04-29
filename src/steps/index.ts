@@ -12,6 +12,7 @@ import { writeMcpConfig } from './write-mcp-config.js';
 import { registerMcpWithClaudeCode } from './register-mcp-with-claude-code.js';
 import { writeBridgeConfig } from './write-bridge-config.js';
 import { generateHttpsCert } from './generate-https-cert.js';
+import { trustHttpsCert } from './trust-https-cert.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -50,13 +51,7 @@ export const STEPS: readonly Step[] = [
   }),
   writeBridgeConfig,
   generateHttpsCert,
-  stubStep({
-    name: 'trust-https-cert',
-    phase: 'install',
-    description: 'security add-trusted-cert (may require sudo)',
-    preconditions: ['generate-https-cert'],
-    skipOn: ['mcp-only'],
-  }),
+  trustHttpsCert,
   stubStep({
     name: 'propagate-service-label',
     phase: 'install',

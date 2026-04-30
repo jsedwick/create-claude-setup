@@ -16,6 +16,7 @@ import { trustHttpsCert } from './trust-https-cert.js';
 import { generateLaunchdPlist } from './generate-launchd-plist.js';
 import { writeGitCommitWatchList } from './write-git-commit-watch-list.js';
 import { installPlugin } from './install-plugin.js';
+import { writePluginMcpJsonOverride } from './write-plugin-mcp-json-override.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -34,13 +35,7 @@ export const STEPS: readonly Step[] = [
   registerMcpWithClaudeCode,
   installPlugin,
   writeGitCommitWatchList,
-  stubStep({
-    name: 'write-plugin-mcp-json-override',
-    phase: 'install',
-    description: 'Generate live .mcp.json from .mcp.example.json template',
-    preconditions: ['install-plugin'],
-    skipOn: ['mcp-only', 'bridge-only'],
-  }),
+  writePluginMcpJsonOverride,
   writeBridgeConfig,
   generateHttpsCert,
   trustHttpsCert,

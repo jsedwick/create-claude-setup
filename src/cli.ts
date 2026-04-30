@@ -8,7 +8,7 @@ export interface ParsedArgs {
   unknown: string[];
 }
 
-const SKIP_FLAGS = new Set(['mcp-only', 'bridge-only', 'no-launchd']);
+const SKIP_FLAGS = new Set(['mcp-only', 'bridge-only', 'no-launchd', 'no-claude-md']);
 
 export function parseArgs(argv: string[]): ParsedArgs {
   const out: ParsedArgs = {
@@ -64,6 +64,7 @@ Options:
   --mcp-only       Install only the MCP server
   --bridge-only    Install only the bridge (requires existing MCP)
   --no-launchd     Skip the LaunchAgent plist install (bridge stays manually-run)
+  --no-claude-md   Skip seeding ~/.claude/CLAUDE.md starter template
   --help, -h       Show this message
 
 State is persisted at ~/.claude/setup-state.json.

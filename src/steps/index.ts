@@ -17,6 +17,7 @@ import { generateLaunchdPlist } from './generate-launchd-plist.js';
 import { writeGitCommitWatchList } from './write-git-commit-watch-list.js';
 import { installPlugin } from './install-plugin.js';
 import { writePluginMcpJsonOverride } from './write-plugin-mcp-json-override.js';
+import { seedClaudeMd } from './seed-claude-md.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -40,11 +41,7 @@ export const STEPS: readonly Step[] = [
   generateHttpsCert,
   trustHttpsCert,
   generateLaunchdPlist,
-  stubStep({
-    name: 'seed-claude-md',
-    phase: 'install',
-    description: 'Seed ~/.claude/CLAUDE.md starter template (opt-out)',
-  }),
+  seedClaudeMd,
 
   stubStep({
     name: 'verify-mcp-reachable',

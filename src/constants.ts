@@ -4,6 +4,10 @@ import { join } from 'node:path';
 export const MANAGED_DIR = join(homedir(), '.claude', 'managed');
 export const STAGING_DIR = join(MANAGED_DIR, '.staging');
 
+export const PLUGINS_DIR = join(homedir(), '.claude', 'plugins');
+export const PLUGIN_INSTALL_DIR = join(PLUGINS_DIR, 'obsidian-claude-plugin');
+export const PLUGIN_TARBALL_TOPLEVEL = 'obsidian-claude-plugin';
+
 export const MCP_SERVER_PACKAGE_NAME = 'obsidian-mcp-server';
 export const MCP_SERVER_PACKAGE_SPEC = 'github:jsedwick/obsidian-mcp-server#main';
 

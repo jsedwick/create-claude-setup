@@ -15,6 +15,7 @@ import { generateHttpsCert } from './generate-https-cert.js';
 import { trustHttpsCert } from './trust-https-cert.js';
 import { generateLaunchdPlist } from './generate-launchd-plist.js';
 import { writeGitCommitWatchList } from './write-git-commit-watch-list.js';
+import { installPlugin } from './install-plugin.js';
 import { stubStep } from './stub.js';
 
 export const STEPS: readonly Step[] = [
@@ -31,13 +32,7 @@ export const STEPS: readonly Step[] = [
 
   writeMcpConfig,
   registerMcpWithClaudeCode,
-  stubStep({
-    name: 'install-plugin',
-    phase: 'install',
-    description: 'Hash-compare bundled vs on-disk; install/skip per Decision 015',
-    preconditions: ['fetch-plugin', 'register-mcp-with-claude-code'],
-    skipOn: ['mcp-only', 'bridge-only'],
-  }),
+  installPlugin,
   writeGitCommitWatchList,
   stubStep({
     name: 'write-plugin-mcp-json-override',

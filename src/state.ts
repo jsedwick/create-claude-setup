@@ -46,6 +46,7 @@ export interface SetupState {
   installerVersion: string;
   startedAt: string;
   lastUpdated: string;
+  completedAt?: string;
   mode?: Mode;
   config: SetupConfig;
   components: Partial<Record<'mcp-server' | 'bridge' | 'plugin', ComponentRecord>>;

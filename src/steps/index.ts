@@ -18,7 +18,10 @@ import { writeGitCommitWatchList } from './write-git-commit-watch-list.js';
 import { installPlugin } from './install-plugin.js';
 import { writePluginMcpJsonOverride } from './write-plugin-mcp-json-override.js';
 import { seedClaudeMd } from './seed-claude-md.js';
-import { stubStep } from './stub.js';
+import { verifyMcpReachable } from './verify-mcp-reachable.js';
+import { verifyBridgeReachable } from './verify-bridge-reachable.js';
+import { verifyPluginLoaded } from './verify-plugin-loaded.js';
+import { finalize } from './finalize.js';
 
 export const STEPS: readonly Step[] = [
   detectPlatform,
@@ -43,27 +46,8 @@ export const STEPS: readonly Step[] = [
   generateLaunchdPlist,
   seedClaudeMd,
 
-  stubStep({
-    name: 'verify-mcp-reachable',
-    phase: 'verify',
-    description: 'Invoke trivial MCP tool or health endpoint',
-    skipOn: ['bridge-only'],
-  }),
-  stubStep({
-    name: 'verify-bridge-reachable',
-    phase: 'verify',
-    description: 'HTTPS GET bridge health endpoint with installed cert',
-    skipOn: ['mcp-only'],
-  }),
-  stubStep({
-    name: 'verify-plugin-loaded',
-    phase: 'verify',
-    description: 'Check installed tree structure + hash manifest matches fetched tarball',
-    skipOn: ['mcp-only', 'bridge-only'],
-  }),
-  stubStep({
-    name: 'finalize',
-    phase: 'verify',
-    description: 'Write success marker and print summary',
-  }),
+  verifyMcpReachable,
+  verifyBridgeReachable,
+  verifyPluginLoaded,
+  finalize,
 ];

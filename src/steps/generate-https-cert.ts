@@ -116,6 +116,8 @@ export const generateHttpsCert: Step = {
       }
 
       if (!ctx.force) {
+        delete ctx.state.fileManifest[certPath];
+        delete ctx.state.fileManifest[keyPath];
         ctx.log(
           `${certPath}: preserving user-supplied cert+key (use --force to regenerate)`,
         );

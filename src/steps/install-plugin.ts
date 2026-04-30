@@ -157,6 +157,7 @@ export const installPlugin: Step = {
           ctx.state.fileManifest[target] = newHash;
           installed += 1;
         } else {
+          delete ctx.state.fileManifest[target];
           ctx.log(`${target}: preserving user-modified file (use --force to overwrite)`);
           preserved += 1;
         }

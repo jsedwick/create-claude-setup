@@ -174,6 +174,7 @@ export const generateLaunchdPlist: Step = {
           ctx.log(`${plistPath}: wrote plist (label=${label})`);
           didWrite = true;
         } else {
+          delete ctx.state.fileManifest[plistPath];
           ctx.log(
             `${plistPath}: preserving user-modified plist (use --force to overwrite)`,
           );

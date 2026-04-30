@@ -85,6 +85,7 @@ export const writeGitCommitWatchList: Step = {
       const installerOwned =
         recordedHash !== undefined && recordedHash === existingHash;
       if (!installerOwned && !ctx.force) {
+        delete ctx.state.fileManifest[target];
         ctx.log(
           `${target}: preserving user-modified list (use --force to overwrite)`,
         );

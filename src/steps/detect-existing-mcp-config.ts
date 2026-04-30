@@ -1,10 +1,10 @@
 import { readFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
+import { MCP_REGISTRATION_KEY } from '../constants.js';
 import type { Step } from './types.js';
 
 const CLAUDE_CONFIG_PATH = join(homedir(), '.claude.json');
-const SERVER_NAME = 'obsidian-mcp-server';
 
 interface ClaudeConfig {
   mcpServers?: Record<string, unknown>;
@@ -13,7 +13,7 @@ interface ClaudeConfig {
 export const detectExistingMcpConfig: Step = {
   name: 'detect-existing-mcp-config',
   phase: 'detect',
-  description: 'Inspect ~/.claude.json for prior obsidian-mcp-server registration',
+  description: `Inspect ~/.claude.json for prior ${MCP_REGISTRATION_KEY} registration`,
   async run(ctx) {
     let raw: string;
     try {
@@ -36,14 +36,14 @@ export const detectExistingMcpConfig: Step = {
       );
     }
 
-    const existing = parsed.mcpServers?.[SERVER_NAME];
+    const existing = parsed.mcpServers?.[MCP_REGISTRATION_KEY];
     if (existing) {
       ctx.log(
-        `existing ${SERVER_NAME} registration found in ~/.claude.json — ` +
+        `existing ${MCP_REGISTRATION_KEY} registration found in ~/.claude.json — ` +
           `wizard will prompt before overwriting`,
       );
     } else {
-      ctx.log(`no ${SERVER_NAME} registration in ~/.claude.json — clean slate`);
+      ctx.log(`no ${MCP_REGISTRATION_KEY} registration in ~/.claude.json — clean slate`);
     }
   },
 };

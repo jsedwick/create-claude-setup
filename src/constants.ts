@@ -10,6 +10,7 @@ export const PLUGIN_TARBALL_TOPLEVEL = 'obsidian-claude-plugin';
 
 export const MCP_SERVER_PACKAGE_NAME = 'obsidian-mcp-server';
 export const MCP_SERVER_PACKAGE_SPEC = 'github:jsedwick/obsidian-mcp-server#main';
+export const MCP_REGISTRATION_KEY = 'obsidian-context-manager';
 
 export const BRIDGE_PACKAGE_NAME = 'claude-chat-bridge';
 export const BRIDGE_PACKAGE_SPEC = 'github:jsedwick/claude-chat-bridge#main';

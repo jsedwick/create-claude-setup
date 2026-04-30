@@ -1,10 +1,10 @@
 import { promises as fs } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
+import { MCP_REGISTRATION_KEY } from '../constants.js';
 import type { Step } from './types.js';
 
 const CLAUDE_CONFIG_FILENAME = '.claude.json';
-const MCP_KEY = 'obsidian-context-manager';
 
 interface McpServerEntry {
   command?: unknown;
@@ -34,19 +34,19 @@ export const verifyMcpReachable: Step = {
     const parsed = JSON.parse(raw) as Record<string, unknown>;
 
     const servers = parsed.mcpServers as Record<string, unknown> | undefined;
-    const entry = servers?.[MCP_KEY] as McpServerEntry | undefined;
+    const entry = servers?.[MCP_REGISTRATION_KEY] as McpServerEntry | undefined;
     if (!entry || typeof entry !== 'object') {
       throw new Error(
-        `${target}: mcpServers.${MCP_KEY} entry missing — register-mcp-with-claude-code did not complete`,
+        `${target}: mcpServers.${MCP_REGISTRATION_KEY} entry missing — register-mcp-with-claude-code did not complete`,
       );
     }
 
     if (typeof entry.command !== 'string') {
-      throw new Error(`${target}: mcpServers.${MCP_KEY}.command is not a string`);
+      throw new Error(`${target}: mcpServers.${MCP_REGISTRATION_KEY}.command is not a string`);
     }
     if (!Array.isArray(entry.args) || typeof entry.args[0] !== 'string') {
       throw new Error(
-        `${target}: mcpServers.${MCP_KEY}.args is missing or malformed`,
+        `${target}: mcpServers.${MCP_REGISTRATION_KEY}.args is missing or malformed`,
       );
     }
 
@@ -57,6 +57,6 @@ export const verifyMcpReachable: Step = {
       );
     }
 
-    ctx.log(`${MCP_KEY}: registered, entrypoint present (${scriptPath})`);
+    ctx.log(`${MCP_REGISTRATION_KEY}: registered, entrypoint present (${scriptPath})`);
   },
 };

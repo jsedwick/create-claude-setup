@@ -2,11 +2,14 @@ import { createHash, randomBytes } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
-import { MANAGED_DIR, MCP_SERVER_PACKAGE_NAME } from '../constants.js';
+import {
+  MANAGED_DIR,
+  MCP_REGISTRATION_KEY,
+  MCP_SERVER_PACKAGE_NAME,
+} from '../constants.js';
 import type { Step } from './types.js';
 
 const CLAUDE_CONFIG_FILENAME = '.claude.json';
-const MCP_KEY = 'obsidian-context-manager';
 const LOG_FILE = '/tmp/obsidian-mcp-server.log';
 
 interface McpServerEntry {
@@ -74,13 +77,13 @@ function buildEntry(): McpServerEntry {
 export const registerMcpWithClaudeCode: Step = {
   name: 'register-mcp-with-claude-code',
   phase: 'install',
-  description: 'Register obsidian-context-manager in ~/.claude.json mcpServers',
+  description: `Register ${MCP_REGISTRATION_KEY} in ~/.claude.json mcpServers`,
   preconditions: ['fetch-mcp-server'],
   shouldSkip: (ctx) =>
     ctx.skipFlags.has('bridge-only') ? '--bridge-only' : false,
   async run(ctx) {
     const target = join(homedir(), CLAUDE_CONFIG_FILENAME);
-    const manifestKey = `${target}#mcpServers.${MCP_KEY}`;
+    const manifestKey = `${target}#mcpServers.${MCP_REGISTRATION_KEY}`;
     const entry = buildEntry();
     const newSlotHash = sha256(canonicalize(entry));
 
@@ -122,24 +125,24 @@ export const registerMcpWithClaudeCode: Step = {
     const servers =
       (existingMcpServers as Record<string, unknown> | undefined) ?? {};
 
-    const existingSlot = servers[MCP_KEY];
+    const existingSlot = servers[MCP_REGISTRATION_KEY];
     const slotIsCurrent =
       existingSlot !== undefined &&
       sha256(canonicalize(existingSlot)) === newSlotHash;
 
     if (slotIsCurrent) {
       ctx.state.fileManifest[manifestKey] = newSlotHash;
-      ctx.log(`${target}: ${MCP_KEY} entry up to date`);
+      ctx.log(`${target}: ${MCP_REGISTRATION_KEY} entry up to date`);
       return;
     }
 
-    servers[MCP_KEY] = entry;
+    servers[MCP_REGISTRATION_KEY] = entry;
     parsed.mcpServers = servers;
     const body = JSON.stringify(parsed, null, 2) + '\n';
     await atomicWriteFile(target, body);
     ctx.state.fileManifest[manifestKey] = newSlotHash;
     ctx.log(
-      `${target}: ${existingSlot === undefined ? 'added' : 'updated'} ${MCP_KEY} entry`,
+      `${target}: ${existingSlot === undefined ? 'added' : 'updated'} ${MCP_REGISTRATION_KEY} entry`,
     );
   },
 };

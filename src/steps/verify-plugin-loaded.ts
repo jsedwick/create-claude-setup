@@ -40,14 +40,13 @@ export const verifyPluginLoaded: Step = {
       throw new Error(`${root}: plugin install dir missing — install-plugin did not complete`);
     }
 
+    // manifestPaths may legitimately be empty when every installer-written
+    // file has subsequently been user-modified (preserve branch drops the
+    // manifest entry). The pluginRoot stat check above already catches the
+    // "install-plugin never ran" case, so this is just informational.
     const manifestPaths = Object.keys(ctx.state.fileManifest).filter(
       (p) => p === root || p.startsWith(`${root}/`),
     );
-    if (manifestPaths.length === 0) {
-      throw new Error(
-        `${root}: no plugin files in fileManifest — install-plugin did not record any writes`,
-      );
-    }
 
     const corrupted: string[] = [];
     const missing: string[] = [];
